@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  # here we select the number of pods we wish to start and the selector that tells our replica set which pods it needs 
+  #  to manage
+  replicas: 3
+  selector:  # Using the selector we tell our replicaset which pods to manage
+    matchLabels:
+      app: nginx
+  template:   # here we define our PODS Specs (k8s uses go template in the background)
+    metadata:
+      labels:
+        app: nginx
+        env: prod
+        version: "1.0" 
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+
